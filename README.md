@@ -47,6 +47,8 @@ El iframe de la portada ya lo abre con una configuración de encuadre/gesto conc
 
 ## Verificación del avatar
 
+El proyecto no tiene `package.json`: Playwright se instala a demanda y el script se ejecuta con `node` directo:
+
 ```bash
 npm install playwright
 npx playwright install chromium
@@ -77,7 +79,20 @@ cd ..                    # subir a la carpeta que contiene a `web/`
 python3 -m http.server 8765
 ```
 
-Abrir `http://127.0.0.1:8765/web/index.html`.
+**Para detener** el servidor: `Ctrl+C` en la terminal donde corre.
+
+### Variables de entorno
+
+| Variable | Default | Descripción |
+| --- | --- | --- |
+| `PORT` | `8765` | Puerto del servidor estático |
+
+> El proyecto no define más variables: no hay `.env`, `package.json` ni scripts. El servidor usa solo la stdlib de Python (`http.server`); cualquier Python 3 funciona, la librería adicional no es necesaria.
+
+### URLs y puertos
+
+- `http://127.0.0.1:8765/web/index.html` — portada
+- `http://127.0.0.1:8765/web/avatar.html` — escena del avatar (aislado en iframe)
 
 Si prefieres servir solo esta carpeta, ajusta el puerto y la ruta en `checks/avatar-check.js` (ahí aparece la URL `http://127.0.0.1:8765/web/index.html`).
 

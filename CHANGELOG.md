@@ -2,6 +2,18 @@
 
 Todas las modificaciones relevantes del proyecto YueWeb.
 
+## [0.4.0] - 2026-08-08
+
+### Added
+
+- README: sección "Variables de entorno" con `PORT` (única variable del proyecto) y sección "URLs y puertos" (portada y escena del avatar).
+- README: instrucción para detener el servidor (`Ctrl+C`).
+
+### Changed
+
+- README: verificación del avatar aclarada (no hay `package.json`; Playwright se instala a demanda con `npm install playwright` + `npx playwright install chromium` y se ejecuta con `node` directo).
+- README: nota de que el servidor usa solo la stdlib de Python (`http.server`), sin dependencias adicionales.
+
 ## [0.3.0] - 2026-08-08
 
 ### Added
