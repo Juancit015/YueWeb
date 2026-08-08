@@ -18,6 +18,7 @@ Sitio web de **YUE Companion**, un proyecto académico de inteligencia artificia
 ├── avatar.html         # Render 3D del avatar VRM (cargado en el iframe)
 ├── app.js              # Control del avatar: emociones, gestos, mirada y navegación
 ├── styles.css          # Hoja de estilos de todo el sitio
+├── serve.sh            # Servidor estático (carpeta contenedora, puerto 8765)
 ├── assets/
 │   ├── yue.vrm         # Modelo 3D del avatar (VRM)
 │   └── card_*.{jpg,webp,avif}  # Imágenes de las cards (AVIF y WebP optimizadas)
@@ -27,6 +28,32 @@ Sitio web de **YUE Companion**, un proyecto académico de inteligencia artificia
     ├── tailwindcss.js  # Tailwind cargado en runtime
     └── lucide.min.js   # Iconos lucide
 ```
+
+## Parámetros del avatar (URL de `avatar.html`)
+
+El iframe de la portada ya lo abre con una configuración de encuadre/gesto concreta (`avatar.html?camDist=1.72&camY=-0.18&turn=-0.18&gest=0.8`). Parámetros soportados:
+
+| Parámetro | Default | Descripción |
+| --- | --- | --- |
+| `vrm` | `../assets/yue.vrm` | URL del modelo VRM |
+| `turn` | `0` | Giro base del modelo (rad) |
+| `camDist` | `1.85` | Distancia de cámara (+lejos = más cuerpo y cabeza) |
+| `camY` | `-0.16` | Altura vertical de la cámara |
+| `armDown` | `1.48` | Cuánto bajan los brazos (rad, +bajan más) |
+| `armFwd` | `0.35` | Avance/receso de los brazos |
+| `armIn` | `0.12` | Antebrazos hacia adentro |
+| `gest` | `1` | Ganancias de gestos (0 = idle, 1 = normal, 2 = teatral; limita en 0-2) |
+| `debug` | — | `1` muestra el fondo visible de prueba |
+
+## Verificación del avatar
+
+```bash
+npm install playwright
+npx playwright install chromium
+node checks/avatar-check.js
+```
+
+El script abre la página en escritorio (1440x900) y móvil (390x844), espera a que el avatar renderice y comprueba que el canvas no esté en blanco (también detecta el estado de fallback `is-fallback`). Genera capturas de referencia en `/tmp/yue-web-desktop-ready.png` y `/tmp/yue-web-mobile-ready.png`.
 
 ## Requisitos
 
@@ -39,6 +66,13 @@ Sitio web de **YUE Companion**, un proyecto académico de inteligencia artificia
 El avatar se sirve desde la carpeta raíz del proyecto (la URL de verificación usa la ruta `/web/...`, por lo que se sirve la carpeta **contenedora**):
 
 ```bash
+./serve.sh                    # usa el puerto 8765 por defecto
+PORT=9000 ./serve.sh          # puerto alternativo
+```
+
+Equivale a:
+
+```bash
 cd ..                    # subir a la carpeta que contiene a `web/`
 python3 -m http.server 8765
 ```
@@ -46,16 +80,6 @@ python3 -m http.server 8765
 Abrir `http://127.0.0.1:8765/web/index.html`.
 
 Si prefieres servir solo esta carpeta, ajusta el puerto y la ruta en `checks/avatar-check.js` (ahí aparece la URL `http://127.0.0.1:8765/web/index.html`).
-
-## Verificación del avatar
-
-```bash
-npm install playwright
-npx playwright install chromium
-node checks/avatar-check.js
-```
-
-El script abre la página en escritorio (1440x900) y móvil (390x844), espera a que el avatar renderice y comprueba que el canvas no esté en blanco (también detecta el estado de fallback `is-fallback`).
 
 ## Optimización de imágenes
 

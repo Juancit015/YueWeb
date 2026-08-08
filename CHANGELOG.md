@@ -2,6 +2,14 @@
 
 Todas las modificaciones relevantes del proyecto YueWeb.
 
+## [0.3.0] - 2026-08-08
+
+### Added
+
+- `serve.sh`: servidor estático de un solo comando (carpeta contenedora, puerto 8765, `PORT` configurable) para que las rutas del avatar funcionen sin pasos manuales.
+- README: tabla de parámetros URL de `avatar.html` (`vrm`, `turn`, `camDist`, `camY`, `armDown`, `armFwd`, `armIn`, `gest`, `debug`) y detalle de las capturas generadas por la verificación (`/tmp/yue-web-*-ready.png`).
+- README: `serve.sh` documentado en la estructura del proyecto y en la sección de ejecución.
+
 ## [0.2.0] - 2026-08-08
 
 ### Added
